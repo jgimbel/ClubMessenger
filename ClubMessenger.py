@@ -42,13 +42,13 @@ def sendSms(user, passwd, number, msg):
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
         #print 'enter your username: '
-        user = 'nathan.bland@gmail.com'
+        user = raw_input()
         print 'enter your password: '
         passwd = getpass.getpass()
         print 'enter the number to text: '
-        textNumber = '3039561667,7203417006'#raw_input()
+        textNumber = raw_input()
         print 'enter text to send:\n'
-        msg = 'This awesome text is being sent through a python script.'#raw_input()
+        msg = raw_input()
 
         sendSms(user, passwd, textNumber, msg)
 
