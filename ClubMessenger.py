@@ -10,10 +10,58 @@
 #-------------------------------------------------------------------------------
 
 #!/usr/bin/python
-import time,  pygvoicelib, getpass
+import time,  pygvoicelib, getpass, MySQLdb
+
+#-----------------------------------------------------------------------------
+def connectToDatabaseAndGetData():
+    db = MySQLdb.connect(host="techtc.org",
+                         user="",
+                         passwd="", #Good bits removed ;)
+                         db="")
+
+    cur = db.cursor()
+    cur.execute("SELECT * FROM members")
+
+    return cur.fetchall()
+
+#-----------------------------------------------------------------------------
+def getNamesFromData(data):
+    pass
+
+#-----------------------------------------------------------------------------
+def getNumbersFromData(data):
+    numbers = []
+    for row in data:
+        pass
+
+#-----------------------------------------------------------------------------
+def getNamesAndNumbersFromData(data):
+    nan = dict()
+    for idx, row in enumerate(data):
+        if not str(row[1]) == "Barry":
+			nan[str(row[4])] = str(row[1])
+    print nan
+    return nan
+
+def sendTextToDict(d, msg):
+    x = dict()
+    myString = str()
+    for key, value in d.iteritems():
+        if not value=="Joel" or not value=="Laura":
+                print key, value
+                name = value.capitalize()
+                ourText = name+", "+msg
+##                ourText = msg
+                sendSms(key, ourText)
+    #Limited at first to test workability
+    #ONLY SELECTING NUMBERS WE KNOW
+
+
 #-----------------------------------------------------------------------------
 #Takes a username, password, number, and message
-def sendSms(user, passwd, number, msg):
+def sendSms(number, msg):
+    user = ''
+    passwd = ''
     voice = pygvoicelib.GoogleVoice(user, passwd)
     try:
         phoneList = voice.get_numbers()
@@ -34,21 +82,29 @@ def sendSms(user, passwd, number, msg):
         return
     print 'attempting to send sms -> ' + repr(voice.send(number, msg))
     print 'waiting'
-    time.sleep(15)
+    time.sleep(0)
     state = voice.get_state()
     repr(state)
     print state
+    print ''
     return
 #-----------------------------------------------------------------------------
 if __name__ == '__main__':
-        #print 'enter your username: '
-        user = raw_input()
-        print 'enter your password: '
-        passwd = getpass.getpass()
-        print 'enter the number to text: '
-        textNumber = raw_input()
-        print 'enter text to send:\n'
-        msg = raw_input()
+    #print 'enter your username: '
+    data = connectToDatabaseAndGetData()
+    #print data
+    dataDict = getNamesAndNumbersFromData(data)
+    print dataDict
+    msg = " game night tonight @ 7:30 in D.B. #302."
+    sendTextToDict(dataDict, msg)
 
-        sendSms(user, passwd, textNumber, msg)
+##        user = raw_input()
+##        print 'enter your password: '
+##        passwd = getpass.getpass()
+##        print 'enter the number to text: '
+##        textNumber = raw_input()
+##        print 'enter text to send:\n'
+##        msg = raw_input()
+##
+##        sendSms(user, passwd, textNumber, msg)
 
