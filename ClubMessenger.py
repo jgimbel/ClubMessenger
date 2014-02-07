@@ -95,7 +95,7 @@ if __name__ == '__main__':
     #print data
     dataDict = getNamesAndNumbersFromData(data)
     print dataDict
-    msg = " game night tonight @ 7:30 in D.B. #302."
+    msg = "" #MESSAGE TO SEND
     sendTextToDict(dataDict, msg)
 
 ##        user = raw_input()
