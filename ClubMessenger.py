@@ -38,7 +38,7 @@ def getNumbersFromData(data):
 def getNamesAndNumbersFromData(data):
     nan = dict()
     for idx, row in enumerate(data):
-        if not str(row[1]) == "Barry":
+        if not str(row[1]) == "":
 			nan[str(row[4])] = str(row[1])
     print nan
     return nan
@@ -47,7 +47,7 @@ def sendTextToDict(d, msg):
     x = dict()
     myString = str()
     for key, value in d.iteritems():
-        if not value=="Joel" or not value=="Laura":
+        if not value=="" or not value=="":
                 print key, value
                 name = value.capitalize()
                 ourText = name+", "+msg
